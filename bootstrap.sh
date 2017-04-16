@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+ set -x
 backup_file() {
     test -e $HOME/$1 && cp -LiR $HOME/$1 $HOME/$1.dotbackup && rm -rf $HOME/$1
     true
@@ -36,14 +36,6 @@ clone_or_pull_repo() {
     fi
 }
 
-load_zsh_modules() {
-    echo "Loading zsh modules..."
-    while read l; do
-        IFS=/ read -a path <<< "$l"
-        clone_or_pull_repo "$l" ".zsh_modules/${path[1]}"
-    done < $HOME/.zmodules
-}
-
 install_virtualenvwrapper() {
     echo "Installing virtualenvwrapper..."
     curl -s https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | exclude_profile=1 $SHELL || true
@@ -64,18 +56,8 @@ configure_bash() {
     echo "Configuring bash..."
     link_directory .bash_scripts .bash_scripts
     link_file .bash_profile .bash_profile
+    link_file .bash_aliases .bash_aliases
     link_file .bashrc .bashrc
-}
-
-configure_zsh() {
-    echo "Configuring zsh..."
-    link_file .zshrc .zshrc
-    link_file .zmodules .zmodules
-    link_directory .zsh_scripts .zsh_scripts
-    backup_directory .zsh_modules
-    mkdir -p ~/.zsh_modules
-    load_zsh_modules
-    rm -f $HOME/.zcompdump
 }
 
 configure_git() {
@@ -131,6 +113,7 @@ delete_backups() {
     rm -rf $HOME/.bash_aliases.dotbackup
     rm -rf $HOME/.bash_local.dotbackup
     rm -rf $HOME/.bash_profile.dotbackup
+    rm -rf $HOME/.bash_aliases.dotbackup
     rm -rf $HOME/.bash_prompt.dotbackup
     rm -rf $HOME/.bashrc.dotbackup
     rm -rf $HOME/.gitconfig.dotbackup
@@ -138,10 +121,6 @@ delete_backups() {
     rm -rf $HOME/.shenv.dotbackup
     rm -rf $HOME/.tmux.conf.dotbackup
     rm -rf $HOME/.vimrc.dotbackup
-    rm -rf $HOME/.zshrc.dotbackup
-    rm -rf $HOME/.zmodules.dotbackup
-    rm -rf $HOME/.zsh_modules.dotbackup
-    rm -rf $HOME/.zsh_scripts.dotbackup
 }
 
 update() {
@@ -151,10 +130,7 @@ update() {
         echo "Updating Vim plugins. Please wait..."
         vim +PluginUpdate +qall > /dev/null 2>&1
     fi
-    load_zsh_modules
-    rm -f $HOME/.zcompdump
 }
-
 set -e
 
 while :
@@ -165,7 +141,6 @@ do
         --update) UPDATE=1; shift; ;;
         --no-virtualenv) NO_VIRTUALENVWRAPPER=1; shift; ;;
         --no-bash) NO_BASH=1; shift; ;;
-        --no-zsh) NO_ZSH=1; shift; ;;
         --no-git) NO_GIT=1; shift; ;;
         --git-name) GIT_NAME=$2; shift 2; ;;
         --git-email) GIT_EMAIL=$2; shift 2; ;;
@@ -194,14 +169,11 @@ fi
 if [ "$NO_VIRTUALENVWRAPPER" != 1 ]; then
     install_virtualenvwrapper
 fi
-if [ "$NO_BASH" != 1 ] || [ "$NO_ZSH" != 1 ]; then
+if [ "$NO_BASH" != 1 ]; then
     configure_shell
 fi
 if [ "$NO_BASH" != 1 ]; then
     configure_bash
-fi
-if [ "$NO_ZSH" != 1 ]; then
-    configure_zsh
 fi
 if [ "$NO_GIT" != 1 ]; then
     configure_git
