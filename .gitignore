@@ -10,3 +10,4 @@
 .ipython/profile_default/startup
 .ipython/profile_default/static/custom/custom.css
 .ipython/profile_default/static/custom/custom.js
+.bash_aliases
