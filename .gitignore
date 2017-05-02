@@ -10,4 +10,5 @@
 .ipython/profile_default/startup
 .ipython/profile_default/static/custom/custom.css
 .ipython/profile_default/static/custom/custom.js
+.aliases_gab
 .bash_aliases
