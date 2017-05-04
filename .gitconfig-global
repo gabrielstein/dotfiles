@@ -2,8 +2,8 @@
 # http://alanct.com/
 
 [user]
-    name = [[GIT_NAME]]
-    email = [[GIT_EMAIL]]
+    name = Gabriel Stein	
+    email = gabriel.stein@former03.de
 [color]
     ui = true
 [diff]
