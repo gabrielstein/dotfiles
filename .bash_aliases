@@ -32,16 +32,6 @@ _pwd_short() {
     echo ${PWD/#$HOME/\~} | sed -E 's!([^/.|^/])[^/]+/!\1/!g'
 }
 
-# Current virtualenv
-_current_venv() {
-    if [ -n "$VIRTUAL_ENV" ]; then
-        local venv="$(basename $VIRTUAL_ENV)"
-        if [ -n "$venv" ]; then
-            echo "($venv) "
-        fi
-    fi
-}
-
 # tmux aliases
 alias tn='tmux new-session -s'
 alias ta='tmux -2 attach-session -t'

@@ -8,6 +8,12 @@
 " vIM
 set nocompatible
 
+" Show me what I'm typing
+set showcmd                     
+
+" Show current mode.
+set showmode                    
+
 " Allow per-directory vimrc
 set exrc
 set secure
@@ -19,6 +25,11 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
+
+set autowrite                   " Automatically save before :next, :make etc.
+set autoread                    " Automatically reread changed files without asking me anything
+set laststatus=2
+set hidden
 
 " Use expected backspace behavior
 set backspace=indent,eol,start
@@ -66,28 +77,28 @@ call vundle#rc()
 
 " Plugins
 Plugin 'gmarik/vundle'
-Plugin 'kien/ctrlp.vim'
-Plugin 'nono/vim-handlebars'
-Plugin 'Glench/Vim-Jinja2-Syntax'
+"Plugin 'kien/ctrlp.vim'
+"Plugin 'nono/vim-handlebars'
 Plugin 'klen/python-mode'
 Plugin 'scrooloose/syntastic'
-Plugin 'tomtom/tcomment_vim'
 Plugin 'bling/vim-airline'
-Plugin 'alanctkc/vim-airline-powerbeans'
-Plugin 'sophacles/vim-bundle-mako'
-Plugin 'nanotech/jellybeans.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'jnwhiteh/vim-golang'
-Plugin 'groenewege/vim-less'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tmhedberg/matchit'
-Plugin 'voithos/vim-python-matchit'
-Plugin 'justinmk/vim-sneak'
 Plugin 'mattn/emmet-vim'
 Plugin 'elzr/vim-json'
-Plugin 'pangloss/vim-javascript'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'rodjek/vim-puppet'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'vim-colorschemes'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'stephpy/vim-yaml'
+Plugin 'tpope/vim-dotenv'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'alanctkc/vim-airline-powerbeans'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline-themes'
+
 if has('lua') && (v:version > 703 || v:version == 703 && has('patch885'))
     Plugin 'Shougo/neocomplete.vim'
 else
@@ -96,7 +107,6 @@ endif
 
 " Turn filetype back on
 filetype plugin indent on
-
 
 " """"""""""""""""""""""""""""""""""""""""""""""""
 " =============== Plugin Settings ================
@@ -107,14 +117,8 @@ let g:jedi#auto_vim_configuration = 0
 let g:jedi#completions_enabled = 0
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
-" Ignore gitignored files in CtrlP
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-
 " Always populate loclists with syntastic
 let g:syntastic_always_populate_loc_list = 1
-
-" Use syntastic for jscs and jshint
-let g:syntastic_javascript_checkers = ['jshint', 'jscs']
 
 " Use syntastic for flake8
 let g:syntastic_check_on_open=1
@@ -143,7 +147,7 @@ let g:airline_left_sep=''
 let g:airline_right_sep=''
 
 " Set airline theme
-let g:airline_theme='powerbeans'
+let g:airline_theme='solarized'
 
 " Show json quotes
 let g:vim_json_syntax_conceal = 0
@@ -179,14 +183,82 @@ set pastetoggle=<Leader>p
 " Ctrl-P rebinding
 map <Leader>f :CtrlP<CR>
 
+" Close VIM
+map <Leader>q :q<CR> 
+
+" ----------------------------------------- "
+" File Type settings 			    		"
+" ----------------------------------------- "
+
+au BufNewFile,BufRead *.vim setlocal noet ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
+au BufNewFile,BufRead *.md setlocal spell noet ts=4 sw=4
+au BufNewFile,BufRead *.yml,*.yaml setlocal expandtab ts=2 sw=2
+au BufNewFile,BufRead *.cpp setlocal expandtab ts=2 sw=2
+au BufNewFile,BufRead *.hpp setlocal expandtab ts=2 sw=2
+au BufNewFile,BufRead *.json setlocal expandtab ts=2 sw=2
+au BufNewFile,BufRead *.jade setlocal expandtab ts=2 sw=2
+
+augroup filetypedetect
+  au BufNewFile,BufRead .tmux.conf*,tmux.conf* setf tmux
+  au BufNewFile,BufRead .nginx.conf*,nginx.conf* setf nginx
+  au BufNewFile,BufRead *.jade setf pug
+augroup END
+
+au FileType nginx setlocal noet ts=4 sw=4 sts=4
+
+" Go settings
+au BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+" autocmd BufEnter *.go colorscheme nofrils-dark
+
+" Markdown Settings
+autocmd BufNewFile,BufReadPost *.md setl ts=4 sw=4 sts=4 expandtab
+
+" Dockerfile settings
+autocmd FileType dockerfile set noexpandtab
+
+" shell/config/systemd settings
+autocmd FileType fstab,systemd set noexpandtab
+autocmd FileType gitconfig,sh,toml set noexpandtab
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDTree
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vim without files
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+" CTRL+n => NERDTree
+map <C-n> :NERDTreeToggle<CR>
+noremap <Leader>n :NERDTreeToggle<cr>
+noremap <Leader>f :NERDTreeFind<cr>
+
+" Close nerdtree and vim on close file
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+
 
 " """"""""""""""""""""""""""""""""""""""""""""""""
 " ==================== Colors ====================
-
-" Use syntax highlighting and color scheme
 syntax enable
-silent! colorscheme jellybeans
-
-" Use 256 colors in color schemes
-"set t_Co=256
-"set term=screen-256color
+if has('gui_running')
+  set transparency=3
+  " fix js regex syntax
+  set regexpengine=1
+  syntax enable
+endif
+set background=dark
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+" let g:hybrid_use_Xresources = 1
+" let g:rehash256 = 1
+colorscheme solarized
+set guifont=Inconsolata:h15
+set guioptions-=L
