@@ -16,7 +16,10 @@ export PROMPT_COMMAND='CurDir=$(_pwd_short)'
 # Export the prompt
 export PS1=$Gray''$ColorOff$DarkGray$Hostname$ColorOff'$(git branch &>/dev/null;\
 if [ $? -eq 0 ]; then \
-    echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
+    #English
+	# echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
+	# Deutsch
+    echo "$(echo `git status` | grep "nichts zu committen" > /dev/null 2>&1; \
     if [ "$?" -eq "0" ]; then \
         echo "'$LightGray'"$(__git_ps1 " [%s]"); \
     else \
