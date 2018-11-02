@@ -112,7 +112,7 @@ bindsym XF86Display exec "xrandr"
 # Terminal
 bindsym $mod+t workspace number 1 Term
 # Monitoring
-bindsym $mod+m workspace number 2 Mon 
+bindsym $mod+m workspace number 2 Mon
 # Email
 bindsym $mod+i workspace Number 3 Mail
 # Free
@@ -206,10 +206,7 @@ bar {
 }
 # Startup scripts (in custom .i3_local)
 exec --no-startup-id i3-msg 'workspace 1 Term; exec /usr/bin/gnome-terminal'
-exec --no-startup-id i3-msg 'workspace 2 Mon; exec /usr/bin/google-chrome https://ssl.former03.de/tools/zabbix'
-exec --no-startup-id i3-msg 'workspace 3 Mail; exec /usr/bin/thunderbird'
-exec --no-startup-id i3-msg 'workspace 4 Free; exec spotify'
+exec --no-startup-id i3-msg 'workspace 2 Mail; exec /usr/bin/thunderbird'
+exec --no-startup-id i3-msg 'workspace 3 Free; exec spotify'
 #exec --no-startup-id i3-msg 'workspace 4:Mutter; exec mutter;'
 exec --no-startup-id /usr/bin/xsetroot -solid '#0c0c0c'
-exec --no-startup-id xautolock -time 5 -locker '~/.i3/i3lock-fancy-multimonitor/lock'
-exec --no-startup-id "/home/gab/setup-monitor.sh"
