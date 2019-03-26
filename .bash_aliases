@@ -17,6 +17,21 @@ alias gco='git checkout'
 alias glo='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %C(cyan)(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias gpv='git checkout $(git reflog | grep checkout: -m 2 | tail -n1 | cut -d " " -f 8-)'
 
+#Unix Passtool Shortcuts
+alias passi="pass insert"
+alias passl="pass ls"
+alias passc="pass -c"
+alias passmv="pass move"
+alias passp="pass git push -u --all"
+alias passg="pass generate"
+alias passrhn="pass -c RHN/rhn-support-gferrazs"
+alias passbug="pass -c Bugzilla/gferrazs@redhat.com"
+
+
+# SOS Reports Shotcuts
+alias xsosa="xsos -a"
+
+
 # Git bash completion
 if type __git_complete > /dev/null 2>&1; then
     __git_complete gad _git_add
@@ -136,10 +151,3 @@ xf () {
         echo "'$1' is not a valid file!"
     fi
 }
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-source ~/.aliases_gab
