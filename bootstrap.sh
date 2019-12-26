@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
  set -x
+cd ~/dotfiles
+
 backup_file() {
     test -e $HOME/$1 && cp -LiR $HOME/$1 $HOME/$1.dotbackup && rm -rf $HOME/$1
     true
@@ -12,16 +14,19 @@ backup_directory() {
 }
 
 link_file() {
+    cd ~/dotfiles
     backup_file $2
     ln -s `pwd`/$1 $HOME/$2
 }
 
 link_directory() {
+    cd ~/dotfiles
     backup_directory $2
     ln -s `pwd`/$1 $HOME/$2
 }
 
 copy_file() {
+    cd ~/dotfiles
     backup_file $2
     cp `pwd`/$1 $HOME/$2
 }
