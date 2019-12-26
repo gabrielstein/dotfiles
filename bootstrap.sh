@@ -44,6 +44,7 @@ install_virtualenvwrapper() {
 
 configure_shell() {
     echo "Configuring common shell environment..."
+    link_file .bash_aliases .bash_aliases
     link_file .bashrc .bashrc
     link_file .shenv .shenv
     if [ "$OSTYPE" == "darwin"* ]; then
@@ -58,6 +59,7 @@ configure_bash() {
     link_directory .bash_scripts .bash_scripts
     link_file .bash_profile .bash_profile
     link_file .bashrc .bashrc
+    link_file .bash_aliases .bash_aliases
 }
 
 configure_git() {
@@ -114,6 +116,7 @@ delete_backups() {
     rm -rf $HOME/.bash_profile.dotbackup
     rm -rf $HOME/.bash_prompt.dotbackup
     rm -rf $HOME/.bashrc.dotbackup
+    rm -rf $HOME/.bash_aliases.dotbackup
     rm -rf $HOME/.gitconfig.dotbackup
     rm -rf $HOME/.gitignore.dotbackup
     rm -rf $HOME/.shenv.dotbackup
