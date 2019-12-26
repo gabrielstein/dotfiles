@@ -44,7 +44,7 @@ install_virtualenvwrapper() {
 
 configure_shell() {
     echo "Configuring common shell environment..."
-    link_file .bash_aliases .bash_aliases
+    link_file .bashrc .bashrc
     link_file .shenv .shenv
     if [ "$OSTYPE" == "darwin"* ]; then
         copy_file .bash_local-mac .bash_local
@@ -57,7 +57,6 @@ configure_bash() {
     echo "Configuring bash..."
     link_directory .bash_scripts .bash_scripts
     link_file .bash_profile .bash_profile
-    link_file .bash_aliases .bash_aliases
     link_file .bashrc .bashrc
 }
 
@@ -111,10 +110,8 @@ delete_backups() {
     rm -rf $HOME/.i3status.conf.dotbackup
     rm -rf $HOME/.ipython.dotbackup
     rm -rf $HOME/.config/ipython.dotbackup
-    rm -rf $HOME/.bash_aliases.dotbackup
     rm -rf $HOME/.bash_local.dotbackup
     rm -rf $HOME/.bash_profile.dotbackup
-    rm -rf $HOME/.bash_aliases.dotbackup
     rm -rf $HOME/.bash_prompt.dotbackup
     rm -rf $HOME/.bashrc.dotbackup
     rm -rf $HOME/.gitconfig.dotbackup
