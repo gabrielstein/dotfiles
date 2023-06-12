@@ -55,3 +55,7 @@ bindkey -M emacs '^N' history-substring-search-down
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/gstein/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

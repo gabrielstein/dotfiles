@@ -16,7 +16,7 @@ alias gdt='git difftool'
 alias gco='git checkout'
 alias glo='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %C(cyan)(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias gpv='git checkout $(git reflog | grep checkout: -m 2 | tail -n1 | cut -d " " -f 8-)'
-
+alias opentw='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off    -accel hvf    -cpu host    -smp 4    -m 3000    -bios /Users/gstein/qemu/QEMU_EFI.fd    -device virtio-gpu-pci    -display default,show-cursor=on    -device qemu-xhci    -device usb-kbd    -device usb-tablet    -device intel-hda    -device hda-duplex    -nic vmnet-bridged,ifname=en7,model=virtio,id=n1    -drive file=/Users/gstein/qemu/opensusetw.raw,format=raw,if=virtio,cache=writethrough'
 # Git bash completion
 if type __git_complete > /dev/null 2>&1; then
     __git_complete gad _git_add

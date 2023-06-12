@@ -44,10 +44,6 @@ load_zsh_modules() {
     done < $HOME/.zmodules
 }
 
-install_virtualenvwrapper() {
-    echo "Installing virtualenvwrapper..."
-    curl -s https://raw.githubusercontent.com/brainsik/virtualenv-burrito/master/virtualenv-burrito.sh | exclude_profile=1 $SHELL || true
-}
 
 configure_shell() {
     echo "Configuring common shell environment..."
@@ -91,14 +87,6 @@ configure_git() {
     copy_file .gitignore-global .gitignore
 }
 
-configure_i3() {
-    echo "Configuring i3..."
-    backup_directory .i3
-    mkdir -p $HOME/.i3
-    link_file .i3/config .i3/config
-    link_file .i3status.conf .i3status.conf
-}
-
 configure_vim() {
     echo "Configuring vim..."
     link_file .vimrc .vimrc
@@ -112,15 +100,6 @@ configure_tmux() {
     link_file .tmux.conf .tmux.conf
 }
 
-configure_ipython() {
-    echo "Configuring ipython..."
-    if [ "$OSTYPE" == "darwin"* ]; then
-        link_directory .ipython .ipython
-    else
-        mkdir -p $HOME/.config
-        link_directory .ipython .config/ipython
-    fi
-}
 
 delete_backups() {
     rm -rf $HOME/.bash_scripts.dotbackup
@@ -163,16 +142,13 @@ do
         -h | --help | -\?) echo "See https://github.com/alanctkc/dotfiles-old/blob/master/README.md"; exit 0; ;;
         --delete-backups) DELETE_BACKUPS=1; shift; ;;
         --update) UPDATE=1; shift; ;;
-        --no-virtualenv) NO_VIRTUALENVWRAPPER=1; shift; ;;
         --no-bash) NO_BASH=1; shift; ;;
         --no-zsh) NO_ZSH=1; shift; ;;
         --no-git) NO_GIT=1; shift; ;;
         --git-name) GIT_NAME=$2; shift 2; ;;
         --git-email) GIT_EMAIL=$2; shift 2; ;;
-        --no-i3) NO_I3=1; shift; ;;
         --no-vim) NO_VIM=1; shift; ;;
         --no-tmux) NO_TMUX=1; shift; ;;
-        --no-ipython) NO_IPYTHON=1; shift; ;;
         --) shift; break; ;;
         -*) printf >&2 'WARNING: Unknown option (ignored): %s\n' "$1"; shift; ;;
         *) break; ;;
@@ -191,9 +167,6 @@ if [ "$UPDATE" == 1 ]; then
     exit 0
 fi
 
-if [ "$NO_VIRTUALENVWRAPPER" != 1 ]; then
-    install_virtualenvwrapper
-fi
 if [ "$NO_BASH" != 1 ] || [ "$NO_ZSH" != 1 ]; then
     configure_shell
 fi
@@ -206,15 +179,10 @@ fi
 if [ "$NO_GIT" != 1 ]; then
     configure_git
 fi
-if [ "$NO_I3" != 1 ]; then
-    configure_i3
-fi
 if [ "$NO_TMUX" != 1 ]; then
     configure_tmux
 fi
-if [ "$NO_IPYTHON" != 1 ]; then
-    configure_ipython
-fi
+
 if [ "$NO_VIM" != 1 ]; then
     configure_vim
 fi
