@@ -20,8 +20,8 @@ alias microos='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off
 alias opentw='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off    -accel hvf    -cpu host    -smp 4    -m 3000    -bios $HOME/qemu/QEMU_EFI.fd    -device virtio-gpu-pci    -display default,show-cursor=on    -device qemu-xhci    -device usb-kbd    -device usb-tablet    -device intel-hda    -device hda-duplex    -nic vmnet-bridged,ifname=en0,model=virtio,id=n1    -drive file=$HOME/qemu/opensusetw.raw,format=raw,if=virtio,cache=writethrough'
 alias suma='ssh root@192.168.2.4'
 alias helper='ssh gab@192.168.2.2'
-alias kvm='ssh root@192.168.2.10'
-alias kvm2='ssh root@192.168.2.11'
+alias kvm='ssh root@192.168.2.15'
+alias hvm='ssh rancher@192.168.2.10'
 
 # Git bash completion
 if type __git_complete > /dev/null 2>&1; then
