@@ -16,12 +16,35 @@ alias gdt='git difftool'
 alias gco='git checkout'
 alias glo='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %C(cyan)(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 alias gpv='git checkout $(git reflog | grep checkout: -m 2 | tail -n1 | cut -d " " -f 8-)'
-alias opentw='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off    -accel hvf    -cpu host    -smp 4    -m 3000    -bios $HOME/qemu/QEMU_EFI.fd    -device virtio-gpu-pci    -display default,show-cursor=on    -device qemu-xhci    -device usb-kbd    -device usb-tablet    -device intel-hda    -device hda-duplex    -nic vmnet-bridged,ifname=en0,model=virtio,id=n1    -drive file=$HOME/qemu/opensusetw.raw,format=raw,if=virtio,cache=writethrough'
+
+# Start KVM Machines
+alias opentw='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off    -accel hvf    -cpu host    -smp 4    -m 3000    -bios $HOME/qemu/QEMU_EFI.fd    -device virtio-gpu-pci    -display default,show-cursor=on    -device qemu-xhci    -device usb-kbd    -device usb-tablet    -device intel-hda    -device hda-duplex    -nic vmnet-bridged,ifname=en0,model=virtio,id=n1  -drive file=$HOME/qemu/opensusetw.raw,format=raw,if=virtio,cache=writethrough'
 alias microos='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off    -accel hvf    -cpu host    -smp 4    -m 3000    -bios $HOME/qemu/QEMU_EFI.fd    -device virtio-gpu-pci    -display default,show-cursor=on    -device qemu-xhci    -device usb-kbd    -device usb-tablet    -device intel-hda    -device hda-duplex    -nic vmnet-bridged,ifname=en0,model=virtio,id=n1    -drive file=$HOME/qemu/microos.raw,format=raw,if=virtio,cache=writethrough'
-alias suma='ssh root@192.168.2.4'
-alias helper='ssh gab@192.168.2.2'
+alias selinux='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off    -accel hvf    -cpu host    -smp 4    -m 3000    -bios $HOME/qemu/QEMU_EFI.fd    -device virtio-gpu-pci    -display default,show-cursor=on    -device qemu-xhci    -device usb-kbd    -device usb-tablet    -device intel-hda    -device hda-duplex    -nic vmnet-bridged,ifname=en0,model=virtio,id=n1    -drive file=$HOME/qemu/2023-05_selinux_intermediate.raw,format=raw,if=virtio,cache=writethrough'
+alias sumavm='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off    -accel hvf    -cpu host    -smp 4    -m 3000    -bios $HOME/qemu/QEMU_EFI.fd    -device virtio-gpu-pci    -display default,show-cursor=on    -device qemu-xhci    -device usb-kbd    -device usb-tablet    -device intel-hda    -device hda-duplex    -nic vmnet-bridged,ifname=en0,model=virtio,id=n1    -drive file=$HOME/qemu/suma.raw,format=raw,if=virtio,cache=writethrough'
+
+# Access homelab servers
+alias helper='ssh root@192.168.2.2'
 alias kvm='ssh root@192.168.2.10'
-alias kvm2='ssh root@192.168.2.11'
+alias suma='ssh root@192.168.2.4'
+alias hub='ssh root@192.168.2.30'
+alias suma1='ssh root@192.168.2.31'
+alias suma2='ssh root@192.168.2.32'
+alias suma3='ssh root@192.168.2.33'
+alias rancher='ssh root@192.168.2.7'
+alias rpimicro='ssh root@192.168.2.5'
+
+# Quickstart Tools
+alias get_aws_token='aws sts get-session-token --duration-seconds 129600'
+alias quickstart_nv='cd ~/quickstart/neuvector/aws && get_aws_token >> terraform.tfvars && vim terraform.tfvars'
+
+# Terraform Utilities
+alias terraform_destroy='terraform destroy --auto-approve'
+alias terraform_apply='terraform apply --auto-approve'
+alias terraform_init='terraform init'
+
+
+
 
 # Git bash completion
 if type __git_complete > /dev/null 2>&1; then
