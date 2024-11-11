@@ -27,6 +27,7 @@ alias sumavm='sudo qemu-system-aarch64    -monitor stdio    -M virt,highmem=off 
 alias helper='ssh root@192.168.2.2'
 alias kvm='ssh root@192.168.2.10'
 alias suma='ssh root@192.168.2.4'
+alias suma5='ssh root@192.168.2.9'
 alias hub='ssh root@192.168.2.30'
 alias suma1='ssh root@192.168.2.31'
 alias suma2='ssh root@192.168.2.32'
