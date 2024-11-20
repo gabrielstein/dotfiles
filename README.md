@@ -56,7 +56,7 @@ This is a complete development configuration using git, vim, tmux, i3, and bash.
 
 Clone the repository to a permanent home (configuration files will be symlinked):
 
-    $ git clone gogs@guaiaca.tchelinux.org:gab/dotfiles.git 
+    $ git clone [https://github.com/gabrielstein/dotfiles.git](https://github.com/gabrielstein/dotfiles.git) 
     $ cd dotfiles
     $ ./bootstrap.sh
 
